@@ -1,12 +1,12 @@
-from flask import request, json, jsonify, Blueprint
+from flask import request, json, jsonify
 
 from models import Users
 from app import app
 from models import db
 
-from src.utils.crypt import encrypt, decrypt
-from src.utils.file import readFile, writeFile
-from src.utils.authorization import generateToken
+# from src.utils.crypt import encrypt, decrypt
+# from src.utils.file import readFile, writeFile
+# from src.utils.authorization import generateToken
 
 # get All Users
 @app.route('/getAllUsers', methods=['GET'])
@@ -47,10 +47,10 @@ def registration():
     except Exception as e:
         return(str(e))
 
-# update user
+# update user by user.id
 @app.route('/updateUser/<id_>', methods=['POST'])
 def update_user(id_):
-    # ngambil dulu data user yang mau diupdate, jaga2 kalo tidak semua kolom diupdate
+    # ngambil dulu data user yang mau diupdate, antisipasi kalo tidak semua kolom diupdate
     user = get_user_by_id(id_).json 
     
     username = request.args.get('username')
@@ -85,7 +85,7 @@ def update_user(id_):
     except Exception as e:
         return(str(e))
 
-# hard delete
+# hard delete user by id
 @app.route('/deleteUser/<id_>', methods=['DELETE'])
 def delete_user(id_):
     try:
