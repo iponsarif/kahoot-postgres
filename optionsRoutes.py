@@ -1,6 +1,6 @@
 from flask import request, json, jsonify
 
-from models import Questions 
+from models import Questions, Options 
 from app import app
 from models import db
 
@@ -8,11 +8,11 @@ from models import db
 # from src.utils.file import readFile, writeFile
 # from src.utils.authorization import verifyLogin
 
-@app.route('/quiz/<id_>/getAllQuestions', methods=['GET'])
-def get_all_questions(id_):
+@app.route('/question/<id_>/getAllOptions', methods=['GET'])
+def get_all_options(id_):
     try:
-        questions = Quizzess.query.join(Questions, Quizzess.id==Questions.quiz_id).filter(Quizzess.id==id_).all()
-        return jsonify([quest.serialize() for quest in questions])
+        options = Questions.query.join(Options, Questions.id==Options.question_id).filter(Questions.id==id_).all()
+        return jsonify([opt.serialize() for opt in options])
     except Exception as e:
         return(str(e))
 

@@ -80,3 +80,27 @@ class Questions(db.Model):
             'number': self.number,
             'answer': self.answer
         }
+
+class Options(db.Model):
+    __tablename__ = 'options'
+
+    id = db.Column(db.Integer, primary_key=True)
+    question_id = db.Column(db.Integer())
+    option = db.Column(db.String())
+    detail = db.Column(db.Integer())
+
+    def __init__(self, question_id, option, detail):
+        self.question_id = question_id
+        self.option = option
+        self.detail = detail
+    
+    def __repr__(self):
+        return '<option id ()>'.format(self.id)
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'question_id': self.question_id,
+            'option': self.option,
+            'detail': self.detail,
+        }        
