@@ -1,5 +1,7 @@
 from flask import request, json, jsonify
+from datetime import datetime, timezone
 
+from utils import utc7
 from models import Users
 from app import app
 from models import db
@@ -33,7 +35,7 @@ def registration():
     password = request.args.get('password')
     fullname = request.args.get('fullname')
     email = request.args.get('email')
-
+    
     try:
         user = Users(
             username = username,
@@ -56,8 +58,10 @@ def update_user(id_):
     username = request.args.get('username')
     password = request.args.get('password')
     fullname = request.args.get('fullname')
-    email = request.args.get('email') 
-
+    email = request.args.get('email')
+    # modified_at = utc7(datetime.utcnow())
+    
+    # print(modified_at)
     # kalau yg diupdate tidak semua kolom
     if username is None:
         username = user['username']
@@ -77,9 +81,10 @@ def update_user(id_):
             'password': password,
             'fullname': fullname,
             'email': email,
+            # 'modified_at': modified_at
         }
         
-        db.session.query(Users).filter_by(id=id_).update(user_)
+        db.session.query(Users).filter(Users.id==id_).update(user_)
         db.session.commit()
         return 'User updated. user id ={}'.format(id_)
     except Exception as e:

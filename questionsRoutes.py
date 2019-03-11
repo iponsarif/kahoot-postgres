@@ -1,6 +1,6 @@
 from flask import request, json, jsonify
 
-from models import Questions, Quizzess 
+from models import Questions, Quizzess, Options
 from app import app
 from models import db
 
@@ -19,11 +19,24 @@ def get_all_questions(id_):
 # get question by id
 @app.route('/quiz/getQuestion/<id_>', methods=['GET'])
 def get_question_by_id(id_):
+    response = {}
+    
+    # ambil question
     try:
         question = Questions.query.filter_by(id=id_).first()
-        return jsonify(question.serialize())
+        response["question"] = question.serialize()
     except Exception as e:
         return(str(e))
+
+    # ambil options dari question tersebut
+    try:
+        options = Options.query.filter_by(question_id=id_).all()
+        serializedOptions = [opt.serialize() for opt in options]
+        response["question"]["options"] = serializedOptions
+    except Exception as e:
+        return(str(e))
+    
+    return jsonify(response)
 
 # create question
 @app.route('/quiz/<quiz_id_>/createQuestion', methods=['POST'])
@@ -51,7 +64,6 @@ def update_question(id_):
     # ngambil dulu data quiz yang mau diupdate, antisipasi kalo tidak semua kolom diupdate
     _question = get_question_by_id(id_).json 
     
-    quiz_id = _question['quiz_id']
     question = request.args.get('question')
     number = request.args.get('number')
     answer = request.args.get('answer')

@@ -17,75 +17,68 @@ def get_all_options(id_):
         return(str(e))
 
 # get question by id
-@app.route('/quiz/getQuestion/<id_>', methods=['GET'])
-def get_question_by_id(id_):
+@app.route('/question/getOption/<id_>', methods=['GET'])
+def get_option_by_id(id_):
     try:
-        question = Questions.query.filter_by(id=id_).first()
-        return jsonify(question.serialize())
+        option = Options.query.filter_by(id=id_).first()
+        return jsonify(option.serialize())
     except Exception as e:
         return(str(e))
 
-# create question
-@app.route('/quiz/<quiz_id_>/createQuestion', methods=['POST'])
-def create_question(quiz_id_):
-    quiz_id = quiz_id_
-    question = request.args.get('question')
-    number = request.args.get('number')
-    answer = request.args.get('answer')
+# create option
+@app.route('/question/<question_id_>/createOption', methods=['POST'])
+def create_option(question_id_):
+    question_id_ = question_id_
+    option = request.args.get('option')
+    detail = request.args.get('detail')
 
     try:
-        question = Questions(
-            quiz_id = quiz_id,
-            question = question,
-            number = number,
-            answer = answer
+        option = Options(
+            question_id = question_id_,
+            option = option,
+            detail = detail,
             )
-        db.session.add(question)
+        db.session.add(option)
         db.session.commit()
-        return 'Question added, question id ={}'.format(question.id)
+        return 'Option added, option id ={}'.format(option.id)
     except Exception as e:
         return(str(e))
 
-@app.route('/quiz/updateQuestion/<id_>', methods=['POST'])
-def update_question(id_):
-    # ngambil dulu data quiz yang mau diupdate, antisipasi kalo tidak semua kolom diupdate
-    _question = get_question_by_id(id_).json 
-    
-    quiz_id = _question['quiz_id']
-    question = request.args.get('question')
-    number = request.args.get('number')
-    answer = request.args.get('answer')
+# update option
+@app.route('/questions/updateOption/<id_>', methods=['POST'])
+def update_option(id_):
+    # ngambil dulu data option yang mau diupdate, antisipasi kalo tidak semua kolom diupdate
+    _option = get_option_by_id(id_).json 
+     
+    option = request.args.get('option')
+    detail = request.args.get('detail')
 
     # kalau yg diupdate tidak semua kolom
-    if question is None:
-        question = _question['question']
+    if option is None:
+        option = _option['option']
 
-    if number is None:
-        number = _question['number']
-
-    if answer is None:
-        answer = _question['answer']
+    if detail is None:
+        detail = _option['number']
         
     try:
-        question_ = {
-            'question': question,
-            'number': number,
-            'answer': answer
+        option_ = {
+            'option': option,
+            'detail': detail,
         }
         
-        db.session.query(Questions).filter_by(id=id_).update(question_)
+        db.session.query(Options).filter_by(id=id_).update(option_)
         db.session.commit()
         return 'Question updated, question id ={}'.format(id_)
     except Exception as e:
         return(str(e))
 
-# hard delete question by id
-@app.route('/quiz/deleteQuestion/<id_>', methods=['DELETE'])
-def delete_question(id_):
+# hard delete option by id
+@app.route('/questions/deleteOption/<id_>', methods=['DELETE'])
+def delete_option(id_): 
     try:
-        question = Questions.query.filter_by(id=id_).first()
-        db.session.delete(question)
+        option = Options.query.filter_by(id=id_).first()
+        db.session.delete(option)
         db.session.commit()
-        return 'Question deleted, question id={}'.format(id_)
+        return 'Option deleted, option id={}'.format(id_)
     except Exception as e:
         return(str(e))

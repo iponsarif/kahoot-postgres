@@ -11,6 +11,7 @@ class Users(db.Model):
     password = db.Column(db.String())
     fullname = db.Column(db.String())
     email = db.Column(db.String())
+    created_at = db.Column(db.DateTime, default=datetime.datetime.now())
 
     def __init__(self, username, password, fullname, email):
         self.username = username
@@ -28,6 +29,7 @@ class Users(db.Model):
             'password': self.password,
             'fullname': self.fullname,
             'email': self.email,
+            'created_at': self.created_at
         }
 
 class Quizzess(db.Model):

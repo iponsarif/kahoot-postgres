@@ -1,6 +1,6 @@
 from flask import request, json, jsonify
 
-from models import Quizzess 
+from models import Quizzess, Questions
 from app import app
 from models import db
 
@@ -19,11 +19,24 @@ def get_all_quizzess():
 # get quiz by id
 @app.route('/quiz/getQuiz/<id_>', methods=['GET'])
 def get_quiz_by_id(id_):
+    response = {}
+
+    # ambil quiz
     try:
         quiz = Quizzess.query.filter_by(id=id_).first()
-        return jsonify(quiz.serialize())
+        response["quiz"] = quiz.serialize()
     except Exception as e:
         return(str(e))
+
+    # ambil questions dari quiz tersebut
+    try:
+        questions = Questions.query.filter_by(quiz_id=id_).all()
+        serializedQuestions = [quest.serialize() for quest in questions]
+        response["quiz"]["question-list"] = serializedQuestion
+    except Exception as e:
+        return(str(e))
+
+    return jsonify(response)
 
 # create quiz
 @app.route('/quiz/createQuiz', methods=['POST'])
