@@ -29,14 +29,18 @@ def get_option_by_id(id_):
 @app.route('/question/<question_id_>/createOption', methods=['POST'])
 def create_option(question_id_):
     question_id_ = question_id_
-    option = request.args.get('option')
-    detail = request.args.get('detail')
+    a = request.args.get('a')
+    b = request.args.get('b')
+    c = request.args.get('c')
+    d = request.args.get('d')
 
     try:
-        option = Options(
+        option = Options( 
             question_id = question_id_,
-            option = option,
-            detail = detail,
+            a = a,
+            b = b,
+            c = c,
+            d = d
             )
         db.session.add(option)
         db.session.commit()
@@ -48,22 +52,32 @@ def create_option(question_id_):
 @app.route('/questions/updateOption/<id_>', methods=['POST'])
 def update_option(id_):
     # ngambil dulu data option yang mau diupdate, antisipasi kalo tidak semua kolom diupdate
-    _option = get_option_by_id(id_).json 
+    option = get_option_by_id(id_).json 
      
-    option = request.args.get('option')
-    detail = request.args.get('detail')
+    a = request.args.get('a')
+    b = request.args.get('b')
+    c = request.args.get('c')
+    d = request.args.get('d')
 
     # kalau yg diupdate tidak semua kolom
-    if option is None:
-        option = _option['option']
+    if a is None:
+        a = option['a']
 
-    if detail is None:
-        detail = _option['number']
+    if b is None:
+        b = option['b']
+    
+    if c is None:
+        c = option['c']
+
+    if d is None:
+        d = option['d']
         
     try:
         option_ = {
-            'option': option,
-            'detail': detail,
+            'a': a,
+            'b': b,
+            'c': c,
+            'd': d
         }
         
         db.session.query(Options).filter_by(id=id_).update(option_)

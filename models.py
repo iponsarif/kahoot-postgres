@@ -39,6 +39,7 @@ class Quizzess(db.Model):
     creator_id = db.Column(db.Integer())
     title = db.Column(db.String())
     category = db.Column(db.String())
+    questions = db.relationship('Questions', backref='quizzess', lazy=True)
 
     def __init__(self, creator_id, title, category):
         self.creator_id = creator_id
@@ -54,16 +55,18 @@ class Quizzess(db.Model):
             'creator_id': self.creator_id,
             'title': self.title,
             'category': self.category,
+            'question-list': [{'number': item.number, 'question': item.question, 'answer': item.answer} for item in self.questions]
         }
 
 class Questions(db.Model):
     __tablename__ = 'questions'
 
     id = db.Column(db.Integer, primary_key=True)
-    quiz_id = db.Column(db.Integer())
+    quiz_id = db.Column(db.Integer, db.ForeignKey('quizzess.id'), nullable=False)
     question = db.Column(db.String())
-    number = db.Column(db.Integer())
+    number = db.Column(db.Integer)
     answer = db.Column(db.String())
+    options = db.relationship('Options', backref='questions', lazy=True)
 
     def __init__(self, quiz_id, question, number, answer):
         self.quiz_id = quiz_id
@@ -80,21 +83,26 @@ class Questions(db.Model):
             'quiz_id': self.quiz_id,
             'question': self.question,
             'number': self.number,
-            'answer': self.answer
+            'answer': self.answer,
+            'options': [{'a':item.a, 'b':item.b, 'c':item.c, 'd':item.d} for item in self.options]
         }
 
 class Options(db.Model):
     __tablename__ = 'options'
 
     id = db.Column(db.Integer, primary_key=True)
-    question_id = db.Column(db.Integer())
-    option = db.Column(db.String())
-    detail = db.Column(db.Integer())
+    question_id = db.Column(db.Integer(), db.ForeignKey('questions.id'), nullable=False)
+    a = db.Column(db.String())
+    b = db.Column(db.String())
+    c = db.Column(db.String())
+    d = db.Column(db.String())
 
-    def __init__(self, question_id, option, detail):
+    def __init__(self, question_id, a, b, c, d):
         self.question_id = question_id
-        self.option = option
-        self.detail = detail
+        self.a = a
+        self.b = b
+        self.c = c
+        self.d = d
     
     def __repr__(self):
         return '<option id ()>'.format(self.id)
@@ -103,6 +111,9 @@ class Options(db.Model):
         return {
             'id': self.id,
             'question_id': self.question_id,
-            'option': self.option,
-            'detail': self.detail,
+            'a': self.a,
+            'b': self.b,
+            'c': self.c,
+            'd': self.d,
         }        
+

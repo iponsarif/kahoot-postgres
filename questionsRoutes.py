@@ -8,35 +8,22 @@ from models import db
 # from src.utils.file import readFile, writeFile
 # from src.utils.authorization import verifyLogin
 
-@app.route('/quiz/<id_>/getAllQuestions', methods=['GET'])
-def get_all_questions(id_):
+@app.route('/getAllQuestions', methods=['GET'])
+def get_all_questions():
     try:
-        questions = Quizzess.query.join(Questions, Quizzess.id==Questions.quiz_id).filter(Quizzess.id==id_).all()
+        questions = Questions.query.all()
         return jsonify([quest.serialize() for quest in questions])
     except Exception as e:
         return(str(e))
 
 # get question by id
-@app.route('/quiz/getQuestion/<id_>', methods=['GET'])
+@app.route('/getQuestion/<id_>', methods=['GET'])
 def get_question_by_id(id_):
-    response = {}
-    
-    # ambil question
     try:
         question = Questions.query.filter_by(id=id_).first()
-        response["question"] = question.serialize()
+        return jsonify(question.serialize())
     except Exception as e:
         return(str(e))
-
-    # ambil options dari question tersebut
-    try:
-        options = Options.query.filter_by(question_id=id_).all()
-        serializedOptions = [opt.serialize() for opt in options]
-        response["question"]["options"] = serializedOptions
-    except Exception as e:
-        return(str(e))
-    
-    return jsonify(response)
 
 # create question
 @app.route('/quiz/<quiz_id_>/createQuestion', methods=['POST'])
