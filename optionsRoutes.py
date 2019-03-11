@@ -1,12 +1,7 @@
 from flask import request, json, jsonify
 
-from models import Questions, Options 
+from models import db, Questions, Options 
 from app import app
-from models import db
-
-# from . import router, getQuiz, questionsFileLocation
-# from src.utils.file import readFile, writeFile
-# from src.utils.authorization import verifyLogin
 
 @app.route('/question/<id_>/getAllOptions', methods=['GET'])
 def get_all_options(id_):

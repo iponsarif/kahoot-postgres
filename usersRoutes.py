@@ -6,10 +6,6 @@ from models import Users
 from app import app
 from models import db
 
-# from src.utils.crypt import encrypt, decrypt
-# from src.utils.file import readFile, writeFile
-# from src.utils.authorization import generateToken
-
 # get All Users
 @app.route('/getAllUsers', methods=['GET'])
 def get_all_users():
@@ -45,7 +41,7 @@ def registration():
             )
         db.session.add(user)
         db.session.commit()
-        return 'User added. user id ={}'.format(user.id)
+        return 'Registration successful. user id ={}'.format(user.id)
     except Exception as e:
         return(str(e))
 

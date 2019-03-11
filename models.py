@@ -117,3 +117,40 @@ class Options(db.Model):
             'd': self.d,
         }        
 
+class Games(db.Model):
+    __tablename__ = 'games'
+
+    game_pin = db.Column(db.Integer, primary_key=True)
+    quiz_id = db.Column(db.Integer)
+
+    def __init__(self, game_pin, quiz_id):
+        self.game_pin = game_pin
+        self.quiz_id = quiz_id
+    
+    def __repr__(self):
+        return '<game pin ()>'.format(self.game_pin)
+
+    def serialize(self):
+        return {
+            'game_pin': self.game_pin,
+            'quiz_id': self.quiz_id
+        }
+
+class Leaderboards(db.Model):
+    __tablename__ = 'leaderboards'
+
+    game_pin = db.Column()
+    participant = db.Column(db.String(), primary_key=True)
+    score = db.Column(db.Integer, default=0)
+
+    def __init__(self, game_pin, participant, score):
+        self.game_pin = game_pin
+        self.participant = participant
+        self.score = score
+    
+    def serialize(self):
+        return {
+            # 'game_pin': self.game_pin,
+            'username': self.participant,
+            'score': self.score
+        }    

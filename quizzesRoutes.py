@@ -55,13 +55,13 @@ def update_quiz(id_):
 
     # kalau yg diupdate tidak semua kolom
     if creator_id is None:
-        creator_id = quiz['username']
+        creator_id = quiz['creator_id']
 
     if title is None:
-        title = quiz['password']
+        title = quiz['title']
 
     if category is None:
-        category = quiz['fullname']
+        category = quiz['category']
         
     try:
         quiz_ = {
