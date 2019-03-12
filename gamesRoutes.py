@@ -16,6 +16,8 @@ def get_all_games():
 # create game
 @app.route('/createGame', methods=['POST'])
 def create_game():    
+    
+    # if game_pin sudah ada
     game_pin = randint(100000,999999)
     quiz_id = request.args.get('quiz_id')
 
@@ -61,13 +63,22 @@ def get_leaderboard_by_game_pin(game_pin_):
 # answer
 @app.route('/answerGame/<game_pin_>', methods=['POST'])
 def submit_answer(game_pin_):
-    quiz_id_ = request.args.get('quiz_id')
+    # quiz_id_ = request.args.get('quiz_id')
     number_ = request.args.get('question_number')
     username_ = request.args.get('username')
     answer_ = request.args.get('answer')
+    
+    # nyari quiz_id
+    try:
+        game = Games.query.filter_by(game_pin=game_pin_).first()
+        quiz_id_ = game.quiz_id
+    except Exception as e:
+        return str(e)
+    
     # nyari answer di database
     try:
         question = Questions.query.join(Quizzess, Quizzess.id==Questions.quiz_id).filter(Questions.quiz_id==quiz_id_, Questions.number==number_).first()
+
         answer = question.answer
     except Exception as e:
         return(str(e))

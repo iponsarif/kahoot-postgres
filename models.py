@@ -36,7 +36,7 @@ class Quizzess(db.Model):
     __tablename__ = 'quizzess'
 
     id = db.Column(db.Integer, primary_key=True)
-    creator_id = db.Column(db.Integer())
+    creator_id = db.Column(db.Integer, db.ForeignKey('Users.id'))
     title = db.Column(db.String())
     category = db.Column(db.String())
     questions = db.relationship('Questions', cascade="all,delete", backref='quizzess', lazy=True)
@@ -121,7 +121,7 @@ class Games(db.Model):
     __tablename__ = 'games'
 
     game_pin = db.Column(db.Integer, primary_key=True)
-    quiz_id = db.Column(db.Integer)
+    quiz_id = db.Column(db.Integer, db.ForeignKey('quizzess.id'))
 
     def __init__(self, game_pin, quiz_id):
         self.game_pin = game_pin
@@ -139,7 +139,7 @@ class Games(db.Model):
 class Leaderboards(db.Model):
     __tablename__ = 'leaderboards'
 
-    game_pin = db.Column()
+    game_pin = db.Column(db.Integer, db.ForeignKey('games.game_pin'))
     participant = db.Column(db.String(), primary_key=True)
     score = db.Column(db.Integer, default=0)
 

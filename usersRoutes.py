@@ -1,10 +1,9 @@
 from flask import request, json, jsonify
 from datetime import datetime, timezone
 
-from utils import utc7
-from models import Users
+from utils import utc7, generateToken
 from app import app
-from models import db
+from models import db, Users
 
 # get All Users
 @app.route('/getAllUsers', methods=['GET'])
@@ -44,6 +43,29 @@ def registration():
         return 'Registration successful. user id ={}'.format(user.id)
     except Exception as e:
         return(str(e))
+
+# login
+@app.route('/login', methods=['POST'])
+def login():
+    response = {}
+    body = request.json
+    username = body['username']
+    password = body['password']
+
+    try:
+        users = get_all_users().json
+        for user in users:
+            if username == user['username']:
+                if password == user['password']:
+                    response['message'] = 'Login Successful'
+                    response['token'] = generateToken(username)
+                else:
+                    response['message'] = 'Login Failed'
+
+    except Exception as e:
+        return str(e)
+    
+    return jsonify(response)
 
 # update user by user.id
 @app.route('/updateUser/<id_>', methods=['POST'])

@@ -24,18 +24,27 @@ def get_question_by_id(id_):
 # create question
 @app.route('/quiz/<quiz_id_>/createQuestion', methods=['POST'])
 def create_question(quiz_id_):
-    quiz_id = quiz_id_
-    question = request.args.get('question')
-    number = request.args.get('number')
-    answer = request.args.get('answer')
-
+    body = request.json
+    question = body['question']
+    number = body['number']
+    answer = body['answer']
+    option = body['options']
+    a = option["a"]
+    b = option["b"]
+    c = option["c"]
+    d = option["d"]
+    # option_list = []
     try:
         question = Questions(
-            quiz_id = quiz_id,
+            quiz_id = quiz_id_,
             question = question,
             number = number,
             answer = answer
             )
+
+        # option_list.append(Options(Questions.id,a,b,c,d))
+
+        question.options = [Options(Questions.id,a,b,c,d)]
         db.session.add(question)
         db.session.commit()
         return 'Question added, question id ={}'.format(question.id)
@@ -78,10 +87,6 @@ def update_question(id_):
 @app.route('/quiz/deleteQuestion/<id_>', methods=['DELETE'])
 def delete_question(id_):
     try:
-        
-        # option = Options.query.filter_by(question_id=id_).first()
-        # db.session.delete(option)
-        
         question = Questions.query.filter_by(id=id_).first()
         db.session.delete(question)
         db.session.commit()        
