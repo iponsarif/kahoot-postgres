@@ -39,7 +39,7 @@ class Quizzess(db.Model):
     creator_id = db.Column(db.Integer())
     title = db.Column(db.String())
     category = db.Column(db.String())
-    questions = db.relationship('Questions', backref='quizzess', lazy=True)
+    questions = db.relationship('Questions', cascade="all,delete", backref='quizzess', lazy=True)
 
     def __init__(self, creator_id, title, category):
         self.creator_id = creator_id
@@ -62,11 +62,11 @@ class Questions(db.Model):
     __tablename__ = 'questions'
 
     id = db.Column(db.Integer, primary_key=True)
-    quiz_id = db.Column(db.Integer, db.ForeignKey('quizzess.id'), nullable=False)
+    quiz_id = db.Column(db.Integer, db.ForeignKey('quizzess.id'))
     question = db.Column(db.String())
     number = db.Column(db.Integer)
     answer = db.Column(db.String())
-    options = db.relationship('Options', backref='questions', lazy=True)
+    options = db.relationship('Options', cascade="all,delete", backref='questions', lazy=True)
 
     def __init__(self, quiz_id, question, number, answer):
         self.quiz_id = quiz_id
@@ -91,7 +91,7 @@ class Options(db.Model):
     __tablename__ = 'options'
 
     id = db.Column(db.Integer, primary_key=True)
-    question_id = db.Column(db.Integer(), db.ForeignKey('questions.id'), nullable=False)
+    question_id = db.Column(db.Integer(), db.ForeignKey('questions.id'))
     a = db.Column(db.String())
     b = db.Column(db.String())
     c = db.Column(db.String())

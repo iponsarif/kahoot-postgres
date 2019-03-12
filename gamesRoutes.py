@@ -45,7 +45,7 @@ def join_game():
         )
         db.session.add(leaderboard)
         db.session.commit()
-        return 'Joined to game pin {}'.format(leaderboard.game_pin)
+        return '{} joined to game pin {}'.format(leaderboard.participant, leaderboard.game_pin)
     except Exception as e:
         return(str(e))
 
