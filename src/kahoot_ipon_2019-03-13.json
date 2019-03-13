@@ -1,7 +1,7 @@
 {
 	"_type": "export",
 	"__export_format": 3,
-	"__export_date": "2019-03-11T15:18:41.273Z",
+	"__export_date": "2019-03-13T06:25:14.040Z",
 	"__export_source": "insomnia.desktop.app:v6.3.2",
 	"resources": [
 		{
@@ -144,8 +144,8 @@
 			"isPrivate": false,
 			"metaSortKey": -1551074957792,
 			"method": "POST",
-			"modified": 1552293411407,
-			"name": "[BELUM] Login",
+			"modified": 1552445504160,
+			"name": "Login",
 			"parameters": [],
 			"parentId": "fld_feb4036535a14386837be2ea4ae29222",
 			"settingDisableRenderRequestBody": false,
@@ -154,7 +154,7 @@
 			"settingRebuildPath": true,
 			"settingSendCookies": true,
 			"settingStoreCookies": true,
-			"url": "{{ localhost  }}/users/login",
+			"url": "{{ localhost  }}/login",
 			"_type": "request"
 		},
 		{
@@ -190,7 +190,7 @@
 			"isPrivate": false,
 			"metaSortKey": -1551074957867,
 			"method": "GET",
-			"modified": 1552293411459,
+			"modified": 1552445722884,
 			"name": "Get User By Id",
 			"parameters": [],
 			"parentId": "fld_feb4036535a14386837be2ea4ae29222",
@@ -200,7 +200,7 @@
 			"settingRebuildPath": true,
 			"settingSendCookies": true,
 			"settingStoreCookies": true,
-			"url": "{{ localhost  }}/getUser/10",
+			"url": "{{ localhost  }}/getUser/1",
 			"_type": "request"
 		},
 		{
@@ -307,7 +307,10 @@
 		{
 			"_id": "req_c2277c2b00a24a6086ba1a33dd6b4064",
 			"authentication": {},
-			"body": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"creator_id\": 4,\n\t\"title\": \"Penjumlahan\",\n\t\"category\": \"Math\",\n\t\"question-list\": [\n      {\n        \"number\": 1,\n        \"question\": \"1 + 1 =\",\n        \"answer\": \"a\"\n      }\n}"
+			},
 			"created": 1552293411479,
 			"description": "",
 			"headers": [
@@ -315,12 +318,17 @@
 					"id": "pair_b1ec3818a1e44844972f8d0341aa9a0d",
 					"name": "Authorization",
 					"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkYXRhIjoia3JxcHVjdGtoIiwiZXhwIjoxNTUxNDM2NDYxLCJpYXQiOjE1NTE0MzU0NjF9.PUCT6Vcm9cjLdY1K5LejWn4lOeAORsEVNo525s2CLDs"
+				},
+				{
+					"id": "pair_bb46dfcd0b7e47509840c704b21f9d0f",
+					"name": "Content-Type",
+					"value": "application/json"
 				}
 			],
 			"isPrivate": false,
 			"metaSortKey": -1550857058867.5,
 			"method": "POST",
-			"modified": 1552316717840,
+			"modified": 1552373015230,
 			"name": "Create Quiz",
 			"parameters": [
 				{
@@ -388,7 +396,7 @@
 			"isPrivate": false,
 			"metaSortKey": -1550857058805,
 			"method": "DELETE",
-			"modified": 1552316904199,
+			"modified": 1552360973722,
 			"name": "Delete Quiz",
 			"parameters": [],
 			"parentId": "fld_dbba5119fbe748179923d0faa394a193",
@@ -398,7 +406,7 @@
 			"settingRebuildPath": true,
 			"settingSendCookies": true,
 			"settingStoreCookies": true,
-			"url": "{{ localhost  }}/quiz/deleteQuiz/13",
+			"url": "{{ localhost  }}/quiz/deleteQuiz/11",
 			"_type": "request"
 		},
 		{
@@ -462,7 +470,10 @@
 		{
 			"_id": "req_f750329af2b243449fc0a045464b0d41",
 			"authentication": {},
-			"body": {},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"question\": \"Apakah nama tumbuhan ini?\",\n\t\"number\": 5,\n\t\"answer\": \"d\",\n\t\"options\": {\n\t\t\"a\": \"bonsai\",\n\t\t\"b\": \"kaktus\",\n\t\t\"c\": \"alga\",\n\t\t\"d\": \"lumut\"\t\t\t\t\t\n\t}\n}"
+			},
 			"created": 1552293411501,
 			"description": "",
 			"headers": [
@@ -470,30 +481,19 @@
 					"id": "pair_9f571a0453bf4a5e92c9b94be1426afe",
 					"name": "Authorization",
 					"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkYXRhIjoia3JxcHVjdGtoIiwiZXhwIjoxNTUxNDM2NDYxLCJpYXQiOjE1NTE0MzU0NjF9.PUCT6Vcm9cjLdY1K5LejWn4lOeAORsEVNo525s2CLDs"
+				},
+				{
+					"id": "pair_093040e4a36c4be7abadb686a7bf212d",
+					"name": "Content-Type",
+					"value": "application/json"
 				}
 			],
 			"isPrivate": false,
 			"metaSortKey": -1550983424882,
 			"method": "POST",
-			"modified": 1552293411501,
+			"modified": 1552372617508,
 			"name": "Create Question",
-			"parameters": [
-				{
-					"id": "pair_842764a1f35c49c2b9cf846142795c23",
-					"name": "question",
-					"value": "Apakah nama hewan ini?"
-				},
-				{
-					"id": "pair_54db39e653a64071a0dee037b950e8bc",
-					"name": "number",
-					"value": "4"
-				},
-				{
-					"id": "pair_3d3fdcd9c4c344b68e1bf61769b9e6be",
-					"name": "answer",
-					"value": "D"
-				}
-			],
+			"parameters": [],
 			"parentId": "fld_c2cd0e22b04c47a09b0091f07a35424e",
 			"settingDisableRenderRequestBody": false,
 			"settingEncodeUrl": true,
@@ -501,7 +501,7 @@
 			"settingRebuildPath": true,
 			"settingSendCookies": true,
 			"settingStoreCookies": true,
-			"url": "{{ localhost  }}/quiz/1/createQuestion",
+			"url": "{{ localhost  }}/quiz/2/createQuestion",
 			"_type": "request"
 		},
 		{
@@ -543,7 +543,7 @@
 			"isPrivate": false,
 			"metaSortKey": -1550983424782,
 			"method": "DELETE",
-			"modified": 1552293411512,
+			"modified": 1552360790619,
 			"name": "Delete Question",
 			"parameters": [],
 			"parentId": "fld_c2cd0e22b04c47a09b0091f07a35424e",
@@ -553,7 +553,7 @@
 			"settingRebuildPath": true,
 			"settingSendCookies": true,
 			"settingStoreCookies": true,
-			"url": "{{ localhost  }}/quiz/deleteQuestions/2",
+			"url": "{{ localhost  }}/quiz/deleteQuestion/7",
 			"_type": "request"
 		},
 		{
@@ -606,7 +606,7 @@
 			"isPrivate": false,
 			"metaSortKey": -1550983424907,
 			"method": "GET",
-			"modified": 1552295373325,
+			"modified": 1552447532129,
 			"name": "Get Question By Id",
 			"parameters": [],
 			"parentId": "fld_c2cd0e22b04c47a09b0091f07a35424e",
@@ -629,14 +629,9 @@
 			"isPrivate": false,
 			"metaSortKey": -1550782730135.875,
 			"method": "POST",
-			"modified": 1552315562885,
+			"modified": 1552378720608,
 			"name": "Answer",
 			"parameters": [
-				{
-					"id": "pair_86ced1e8de5a4ebfb196bcb3b5d3f3df",
-					"name": "quiz_id",
-					"value": "1"
-				},
 				{
 					"id": "pair_754c458896d6436fa41701eeb3740116",
 					"name": "question_number",
@@ -645,7 +640,7 @@
 				{
 					"id": "pair_72b29f88013a42c9972a1f4c968d57ef",
 					"name": "username",
-					"value": "ketiga"
+					"value": "firman"
 				},
 				{
 					"id": "pair_e0cda40a26ae455780776323010ac1d3",
@@ -660,7 +655,7 @@
 			"settingRebuildPath": true,
 			"settingSendCookies": true,
 			"settingStoreCookies": true,
-			"url": "{{ localhost  }}/answerGame/300112",
+			"url": "{{ localhost  }}/answerGame/821326",
 			"_type": "request"
 		},
 		{
@@ -711,18 +706,18 @@
 			"isPrivate": false,
 			"metaSortKey": -1550782730185.875,
 			"method": "POST",
-			"modified": 1552317247567,
+			"modified": 1552361366140,
 			"name": "Join Game",
 			"parameters": [
 				{
 					"id": "pair_d9d80fbc913e4f16b3486ae1c65beb0e",
 					"name": "game_pin",
-					"value": "915391"
+					"value": "821326"
 				},
 				{
 					"id": "pair_978b39320f814536a69fbca96fb29950",
 					"name": "username",
-					"value": "adit"
+					"value": "ipon"
 				}
 			],
 			"parentId": "fld_f0291fe75775442ea818cd0e72e212ff",
@@ -745,7 +740,7 @@
 			"isPrivate": false,
 			"metaSortKey": -1550782730085.875,
 			"method": "GET",
-			"modified": 1552317233586,
+			"modified": 1552361345272,
 			"name": "Leaderboard",
 			"parameters": [],
 			"parentId": "fld_f0291fe75775442ea818cd0e72e212ff",
@@ -755,7 +750,7 @@
 			"settingRebuildPath": true,
 			"settingSendCookies": true,
 			"settingStoreCookies": true,
-			"url": "{{ localhost  }}/leaderboard/300112",
+			"url": "{{ localhost  }}/leaderboard/821326",
 			"_type": "request"
 		},
 		{
@@ -843,7 +838,7 @@
 			"isPrivate": false,
 			"metaSortKey": -1550983424863.25,
 			"method": "POST",
-			"modified": 1552293411631,
+			"modified": 1552360769750,
 			"name": "Create Option",
 			"parameters": [
 				{
@@ -874,7 +869,7 @@
 			"settingRebuildPath": true,
 			"settingSendCookies": true,
 			"settingStoreCookies": true,
-			"url": "{{ localhost  }}/question/4/createOption",
+			"url": "{{ localhost  }}/question/7/createOption",
 			"_type": "request"
 		},
 		{
@@ -893,7 +888,7 @@
 			"isPrivate": false,
 			"metaSortKey": -1550983424813.25,
 			"method": "POST",
-			"modified": 1552293411638,
+			"modified": 1552361773887,
 			"name": "Update Option",
 			"parameters": [
 				{
@@ -924,7 +919,7 @@
 			"settingRebuildPath": true,
 			"settingSendCookies": true,
 			"settingStoreCookies": true,
-			"url": "{{ localhost  }}/questions/updateOption/11",
+			"url": "{{ localhost  }}/questions/updateOption/13",
 			"_type": "request"
 		},
 		{
