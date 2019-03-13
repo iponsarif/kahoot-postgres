@@ -78,7 +78,9 @@ class Questions(db.Model):
         return '<question id ()>'.format(self.id)
 
     def serialize(self):
+        quiz = Quizzess.query.filter(Quizzess.id==self.quiz_id).first()
         return {
+            'quiz': quiz.title,
             'id': self.id,
             'quiz_id': self.quiz_id,
             'question': self.question,

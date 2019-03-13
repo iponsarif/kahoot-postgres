@@ -3,9 +3,6 @@ from flask import request, json, jsonify
 from app import app
 from models import db, Quizzess, Questions
 
-# from src.utils.file import readFile, writeFile
-# from src.utils.authorization import verifyLogin
-
 # get all quizzess
 @app.route('/quiz/getAllQuizzess', methods=['GET'])
 def get_all_quizzess():

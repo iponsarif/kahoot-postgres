@@ -1,14 +1,18 @@
 from flask import request, json, jsonify
 
-from models import Questions, Quizzess, Options
 from app import app
-from models import db
+from models import db, Questions, Quizzess, Options
 
+# get all questions
 @app.route('/getAllQuestions', methods=['GET'])
 def get_all_questions():
     try:
+        # nyari questions
         questions = Questions.query.all()
-        return jsonify([quest.serialize() for quest in questions])
+        view = [quest.serialize() for quest in questions]
+
+        return jsonify(view)
+
     except Exception as e:
         return(str(e))
 

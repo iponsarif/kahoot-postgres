@@ -90,7 +90,7 @@ def submit_answer(game_pin_):
     except Exception as e:
         return(str(e))
 
-    # kalau jawaban benar    
+    # kalau jawaban benar
     if answer == answer_:
         score += 100
 
@@ -106,4 +106,3 @@ def submit_answer(game_pin_):
         return 'Correct answer, your score is {}'.format(leaderboard['score'])
     except Exception as e:
         return(str(e))
-        

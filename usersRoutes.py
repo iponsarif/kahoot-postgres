@@ -26,6 +26,8 @@ def get_user_by_id(id_):
 # registration
 @app.route('/registration', methods=['POST'])
 def registration():
+    response = {}
+
     username = request.args.get('username')
     password = request.args.get('password')
     fullname = request.args.get('fullname')
@@ -40,31 +42,41 @@ def registration():
             )
         db.session.add(user)
         db.session.commit()
-        return 'Registration successful. user id ={}'.format(user.id)
+        # return 'Registration successful. user id ={}'.format(user.id)
+        response['Message'] = 'Registration success'
     except Exception as e:
-        return(str(e))
+        response['Message'] = 'Registration failed'
+        response['Error'] = str(e)
+        # return(str(e))
+    
+    return jsonify(response)
 
-# login
+# login + generate token
 @app.route('/login', methods=['POST'])
 def login():
     response = {}
     body = request.json
     username = body['username']
     password = body['password']
+    isLogin = False
 
     try:
         users = get_all_users().json
         for user in users:
             if username == user['username']:
                 if password == user['password']:
-                    response['message'] = 'Login Successful'
-                    response['token'] = generateToken(username)
-                else:
-                    response['message'] = 'Login Failed'
-
+                    isLogin = True
+                    
     except Exception as e:
-        return str(e)
+        response['Error'] = str(e)
+        # return str(e)
     
+    if isLogin:
+        response['message'] = 'Login success, welcome {}'.format(username)
+        response['token'] = generateToken(username)
+    else:
+        response['message'] = 'Login failed, username or password is wrong'
+        
     return jsonify(response)
 
 # update user by user.id
