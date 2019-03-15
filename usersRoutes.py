@@ -27,11 +27,12 @@ def get_user_by_id(id_):
 @app.route('/registration', methods=['POST'])
 def registration():
     response = {}
+    body = request.json
 
-    username = request.args.get('username')
-    password = request.args.get('password')
-    fullname = request.args.get('fullname')
-    email = request.args.get('email')
+    username = body['username']
+    password = body['password']
+    fullname = body['fullname']
+    email = body['email']
     
     try:
         user = Users(
@@ -84,11 +85,12 @@ def login():
 def update_user(id_):
     # ngambil dulu data user yang mau diupdate, antisipasi kalo tidak semua kolom diupdate
     user = get_user_by_id(id_).json 
-    
-    username = request.args.get('username')
-    password = request.args.get('password')
-    fullname = request.args.get('fullname')
-    email = request.args.get('email')
+    body = request.json
+
+    username = body['username']
+    password = body['password']
+    fullname = body['fullname']
+    email = body['email']
     # modified_at = utc7(datetime.utcnow())
     
     # print(modified_at)

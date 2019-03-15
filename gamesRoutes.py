@@ -19,7 +19,9 @@ def create_game():
     
     # if game_pin sudah ada
     game_pin = randint(100000,999999)
-    quiz_id = request.args.get('quiz_id')
+    body = request.json
+
+    quiz_id = body['quiz_id']
 
     try:
         game = Games( 
@@ -35,8 +37,10 @@ def create_game():
 # join game
 @app.route('/joinGame', methods=['POST'])
 def join_game():
-    game_pin = request.args.get('game_pin')
-    participant = request.args.get('username')
+    body = request.json
+
+    game_pin = body['game_pin']
+    participant = body['username']
     score = 0
 
     try:
@@ -64,9 +68,11 @@ def get_leaderboard_by_game_pin(game_pin_):
 @app.route('/answerGame/<game_pin_>', methods=['POST'])
 def submit_answer(game_pin_):
     # quiz_id_ = request.args.get('quiz_id')
-    number_ = request.args.get('question_number')
-    username_ = request.args.get('username')
-    answer_ = request.args.get('answer')
+    body = request.json
+
+    number_ = body['question_number']
+    username_ = body['username']
+    answer_ = body['answer']
     
     # nyari quiz_id
     try:

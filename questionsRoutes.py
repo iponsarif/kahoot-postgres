@@ -59,10 +59,11 @@ def create_question(quiz_id_):
 def update_question(id_):
     # ngambil dulu data quiz yang mau diupdate, antisipasi kalo tidak semua kolom diupdate
     _question = get_question_by_id(id_).json 
-    
-    question = request.args.get('question')
-    number = request.args.get('number')
-    answer = request.args.get('answer')
+    body = request.json
+
+    question = body['question']
+    number = body['number']
+    answer = body['answer']
 
     # kalau yg diupdate tidak semua kolom
     if question is None:

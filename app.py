@@ -1,8 +1,9 @@
 from flask import Flask, jsonify
 from models import db
+from flask_cors import CORS
 
 app = Flask(__name__)
-
+CORS(app)
 app.config['JSON_SORT_KEYS'] = False
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False

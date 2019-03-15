@@ -24,9 +24,11 @@ def get_quiz_by_id(id_):
 # create quiz
 @app.route('/quiz/createQuiz', methods=['POST'])
 def create_quiz():
-    creator_id = request.args.get('creator_id')
-    title = request.args.get('title')
-    category = request.args.get('category')
+    body = request.json
+
+    creator_id = body['creator_id']
+    title = body['title']
+    category = body['category']
 
     try:
         quiz = Quizzess(
@@ -45,10 +47,11 @@ def create_quiz():
 def update_quiz(id_):
     # ngambil dulu data quiz yang mau diupdate, antisipasi kalo tidak semua kolom diupdate
     quiz = get_quiz_by_id(id_).json 
-    
-    creator_id = request.args.get('creator_id')
-    title = request.args.get('title')
-    category = request.args.get('category')
+    body = request.json
+
+    creator_id = body['creator_id']
+    title = body['title']
+    category = body['category']
 
     # kalau yg diupdate tidak semua kolom
     if creator_id is None:

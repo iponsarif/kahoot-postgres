@@ -24,10 +24,12 @@ def get_option_by_id(id_):
 @app.route('/question/<question_id_>/createOption', methods=['POST'])
 def create_option(question_id_):
     question_id_ = question_id_
-    a = request.args.get('a')
-    b = request.args.get('b')
-    c = request.args.get('c')
-    d = request.args.get('d')
+    body = request.json
+
+    a = body['a']
+    b = body['b']
+    c = body['c']
+    d = body['d']
 
     try:
         option = Options( 
@@ -48,11 +50,12 @@ def create_option(question_id_):
 def update_option(id_):
     # ngambil dulu data option yang mau diupdate, antisipasi kalo tidak semua kolom diupdate
     option = get_option_by_id(id_).json 
-     
-    a = request.args.get('a')
-    b = request.args.get('b')
-    c = request.args.get('c')
-    d = request.args.get('d')
+    body = request.json
+
+    a = body['a']
+    b = body['b']
+    c = body['c']
+    d = body['d']
 
     # kalau yg diupdate tidak semua kolom
     if a is None:
