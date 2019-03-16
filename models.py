@@ -36,7 +36,7 @@ class Quizzess(db.Model):
     __tablename__ = 'quizzess'
 
     id = db.Column(db.Integer, primary_key=True)
-    creator_id = db.Column(db.Integer, db.ForeignKey('Users.id'))
+    creator_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     title = db.Column(db.String())
     category = db.Column(db.String())
     questions = db.relationship('Questions', cascade="all,delete", backref='quizzess', lazy=True)

@@ -7,6 +7,8 @@ from models import db, Quizzess, Questions
 @app.route('/quiz/getAllQuizzess', methods=['GET'])
 def get_all_quizzess():
     try:
+        username = request.cookies.get('username')
+        print('username',username)
         quizzess = Quizzess.query.order_by(Quizzess.id).all()
         return jsonify([quiz.serialize() for quiz in quizzess])
     except Exception as e:

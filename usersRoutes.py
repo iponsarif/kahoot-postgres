@@ -1,4 +1,4 @@
-from flask import request, json, jsonify
+from flask import request, json, jsonify, make_response
 from datetime import datetime, timezone
 
 from utils import utc7, generateToken
@@ -57,6 +57,7 @@ def registration():
 def login():
     response = {}
     body = request.json
+    print(body)
     username = body['username']
     password = body['password']
     isLogin = False
@@ -75,38 +76,56 @@ def login():
     if isLogin:
         response['message'] = 'Login success, welcome {}'.format(username)
         response['token'] = generateToken(username)
+        statusCode = 200
+        
     else:
         response['message'] = 'Login failed, username or password is wrong'
-        
-    return jsonify(response)
+        statusCode = 400
+
+    finalResponse = make_response(jsonify(response), statusCode)
+    finalResponse.set_cookie('username', username)
+
+    print('finalssss',finalResponse)
+    return finalResponse
+
+# cookies
+# def set_cookies(username):
+#     resp = make_response('')
+#     resp.set_cookie('username', username)
+#     return resp
 
 # update user by user.id
 @app.route('/updateUser/<id_>', methods=['POST'])
 def update_user(id_):
     # ngambil dulu data user yang mau diupdate, antisipasi kalo tidak semua kolom diupdate
     user = get_user_by_id(id_).json 
-    body = request.json
-
-    username = body['username']
-    password = body['password']
-    fullname = body['fullname']
-    email = body['email']
+    print(user)
+    body = request.json    
     # modified_at = utc7(datetime.utcnow())
     
     # print(modified_at)
     # kalau yg diupdate tidak semua kolom
-    if username is None:
+    if 'username' not in body:
         username = user['username']
+    else:
+        username = body['username']
 
-    if password is None:
+    if 'password' not in body:
         password = user['password']
+    else:
+        password = body['password']
 
-    if fullname is None:
+    if body['fullname']:
+    # if 'fullname' not in body:
         fullname = user['fullname']
+    else:
+        fullname = body['fullname']
         
-    if email is None:
+    if 'email' not in body:
         email = user['email']        
-           
+    else:
+        email = body['email']
+        
     try:
         user_ = {
             'username': username,
