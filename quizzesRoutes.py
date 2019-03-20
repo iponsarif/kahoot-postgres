@@ -23,6 +23,16 @@ def get_quiz_by_id(id_):
     except Exception as e:
         return(str(e))
 
+@app.route('/quiz/getQuizByCreatorId/<creator_id_>', methods=['GET'])
+def get_quiz_by_creator_id(creator_id_):
+    try:
+        username = request.cookies.get('username')
+        print('username',username)
+        quizzess = Quizzess.query.order_by(Quizzess.id).filter_by(creator_id=creator_id_).all()
+        return jsonify([quiz.serialize() for quiz in quizzess])
+    except Exception as e:
+        return(str(e))
+
 # create quiz
 @app.route('/quiz/createQuiz', methods=['POST'])
 def create_quiz():

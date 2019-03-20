@@ -40,6 +40,7 @@ class Quizzess(db.Model):
     title = db.Column(db.String())
     category = db.Column(db.String())
     questions = db.relationship('Questions', cascade="all,delete", backref='quizzess', lazy=True)
+    created_at = db.Column(db.DateTime, default=datetime.datetime.now())
 
     def __init__(self, creator_id, title, category):
         self.creator_id = creator_id

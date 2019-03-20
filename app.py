@@ -7,6 +7,7 @@ CORS(app)
 app.config['JSON_SORT_KEYS'] = False
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+                                                     #username:password@host:port/db
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:123@localhost:5432/kahoot'
 
 db.init_app(app)
