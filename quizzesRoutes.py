@@ -26,6 +26,7 @@ def get_quiz_by_id(id_):
 # create quiz
 @app.route('/quiz/createQuiz', methods=['POST'])
 def create_quiz():
+    response = {}
     body = request.json
 
     creator_id = body['creator_id']
@@ -40,9 +41,13 @@ def create_quiz():
             )
         db.session.add(quiz)
         db.session.commit()
-        return 'Quiz added, quiz id ={}'.format(quiz.id)
+        quiz = Quizzess.query.filter_by(creator_id=creator_id, title=title, category=category).first()
+        response['message'] = "Create quiz success"
+        response['id'] = quiz.id
+        return jsonify(response), 200
     except Exception as e:
-        return(str(e))
+        response['message'] = str(e)
+        return jsonify(response), 400
 
 # update quiz by quiz.id
 @app.route('/quiz/updateQuiz/<id_>', methods=['POST'])

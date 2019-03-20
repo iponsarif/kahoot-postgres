@@ -55,7 +55,7 @@ class Quizzess(db.Model):
             'creator_id': self.creator_id,
             'title': self.title,
             'category': self.category,
-            'question-list': [{'number': item.number, 'question': item.question, 'answer': item.answer} for item in self.questions]
+            'question-list': [{'number': item.number, 'question': item.question, 'answer': item.answer, 'qs_id': item.id} for item in self.questions]
         }
 
 class Questions(db.Model):

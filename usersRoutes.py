@@ -44,13 +44,14 @@ def registration():
         db.session.add(user)
         db.session.commit()
         # return 'Registration successful. user id ={}'.format(user.id)
-        response['Message'] = 'Registration success'
+        response['message'] = 'Registration success, please login!'
+        statusCode = 200
     except Exception as e:
-        response['Message'] = 'Registration failed'
+        response['message'] = 'Registration failed'
         response['Error'] = str(e)
-        # return(str(e))
+        statusCode = 400
     
-    return jsonify(response)
+    return jsonify(response), statusCode
 
 # login + generate token
 @app.route('/login', methods=['POST'])
@@ -83,7 +84,7 @@ def login():
         statusCode = 400
 
     finalResponse = make_response(jsonify(response), statusCode)
-    finalResponse.set_cookie('username', username)
+    finalResponse.set_cookie('username', value=username)
 
     print('finalssss',finalResponse)
     return finalResponse

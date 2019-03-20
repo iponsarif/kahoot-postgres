@@ -37,7 +37,7 @@ def create_question(quiz_id_):
     b = option["b"]
     c = option["c"]
     d = option["d"]
-    # option_list = []
+    
     try:
         question = Questions(
             quiz_id = quiz_id_,
@@ -46,19 +46,17 @@ def create_question(quiz_id_):
             answer = answer
             )
 
-        # option_list.append(Options(Questions.id,a,b,c,d))
-
         question.options = [Options(Questions.id,a,b,c,d)]
         db.session.add(question)
         db.session.commit()
-        return 'Question added, question id ={}'.format(question.id)
+        return 'Question added, question id ={}'.format(question.id), 200
     except Exception as e:
-        return(str(e))
+        return str(e), 400
 
 @app.route('/quiz/updateQuestion/<id_>', methods=['POST'])
 def update_question(id_):
     # ngambil dulu data quiz yang mau diupdate, antisipasi kalo tidak semua kolom diupdate
-    _question = get_question_by_id(id_).json 
+    # _question = get_question_by_id(id_).json 
     body = request.json
 
     question = body['question']
@@ -66,14 +64,14 @@ def update_question(id_):
     answer = body['answer']
 
     # kalau yg diupdate tidak semua kolom
-    if question is None:
-        question = _question['question']
+    # if question is None:
+    #     question = _question['question']
 
-    if number is None:
-        number = _question['number']
+    # if number is None:
+    #     number = _question['number']
 
-    if answer is None:
-        answer = _question['answer']
+    # if answer is None:
+    #     answer = _question['answer']
         
     try:
         question_ = {
@@ -84,18 +82,18 @@ def update_question(id_):
         
         db.session.query(Questions).filter_by(id=id_).update(question_)
         db.session.commit()
-        return 'Question updated, question id ={}'.format(id_)
+        return 'Question updated, question id ={}'.format(id_), 200
     except Exception as e:
-        return(str(e))
+        return(str(e)), 400
 
 # hard delete question by id
-@app.route('/quiz/deleteQuestion/<id_>', methods=['DELETE'])
+@app.route('/deleteQuestion/<id_>', methods=['DELETE'])
 def delete_question(id_):
     try:
         question = Questions.query.filter_by(id=id_).first()
         db.session.delete(question)
         db.session.commit()        
 
-        return 'Question deleted, question id={}'.format(id_)
+        return 'Question deleted, question id={}'.format(id_), 200
     except Exception as e:
-        return(str(e))
+        return str(e), 400
