@@ -15,9 +15,9 @@ def get_all_games():
 
 # create game
 @app.route('/createGame', methods=['POST'])
-def create_game():    
-    
+def create_game():
     # if game_pin sudah ada
+    response = {}
     game_pin = randint(100000,999999)
     body = request.json
 
@@ -30,9 +30,11 @@ def create_game():
         )
         db.session.add(game)
         db.session.commit()
-        return 'Game created, game pin = {}'.format(game.game_pin)
+        response['message'] = "Game creted."
+        response['game-pin'] = game.game_pin
+        return jsonify(response), 200
     except Exception as e:
-        return(str(e))
+        return str(e), 400
 
 # join game
 @app.route('/joinGame', methods=['POST'])
